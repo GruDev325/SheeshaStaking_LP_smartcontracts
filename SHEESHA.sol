@@ -82,4 +82,20 @@ contract SHEESHA is ERC20Burnable, Ownable {
         );
         vaultLPTransferDone = true;
     }
+
+    /**
+     * @dev Transfer tokens to vesting contract.
+     * @param vestingAddress_ Address where tokens for vesting
+     * to send (49.5% of total supply).
+     */
+    function transferToVesting(address vestingAddress_) external onlyOwner {
+        require(!vestingTransferDone, "Already transferred");
+        _transfer(
+            address(this),
+            vestingAddress_,
+            INITIAL_SUPPLY.mul(495).div(1000)
+        );
+        vestingTransferDone = true;
+    }
+    
 }
