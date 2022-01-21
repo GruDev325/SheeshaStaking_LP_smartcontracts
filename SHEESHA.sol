@@ -63,4 +63,23 @@ contract SHEESHA is ERC20Burnable, Ownable {
         );
         vaultTransferDone = true;
     }   
+
+    
+    /**
+     * @dev Transfer staking native rewards.
+     * @param vaultLPAddress_ Address where tokens for staking LP
+     * to send (20% of total supply).
+     */
+    function transferVaultLPRewards(address vaultLPAddress_)
+        external
+        onlyOwner
+    {
+        require(!vaultLPTransferDone, "Already transferred");
+        _transfer(
+            address(this),
+            vaultLPAddress_,
+            INITIAL_SUPPLY.mul(20).div(100)
+        );
+        vaultLPTransferDone = true;
+    }
 }
