@@ -74,4 +74,21 @@ contract SHEESHAVaultLP is Ownable, ReentrancyGuard {
         uint256 indexed pid,
         uint256 amount
     );
+    /**
+     * @dev Constructor of the contract.
+     * @param _sheesha Sheesha native token.\
+
+     
+     * @param _feeWallet Address where fee would be transfered.
+     * @param _startBlock Start block of staking contract.
+     * @param _sheeshaPerBlock Amount of Sheesha rewards per block.
+     */
+    constructor(
+        SHEESHA _sheesha,
+        address _feeWallet,
+        uint256 _startBlock,
+        uint256 _sheeshaPerBlock
+    ) {
+        
+    }
 }
