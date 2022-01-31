@@ -30,4 +30,16 @@ contract SHEESHAVaultLP is Ownable, ReentrancyGuard {
         uint256 lastRewardBlock;
         uint256 accSheeshaPerShare;
     }
+
+    uint256 private constant PERCENTAGE_DIVIDER = 1e12;
+
+    SHEESHA public immutable sheesha;
+    uint256 public immutable startBlock;
+    uint256 public immutable sheeshaPerBlock;
+
+    uint256 public lpRewards = 200_000_000e18;
+    uint256 public totalAllocPoint;
+    uint256 public userCount;
+    address public feeWallet;
+    PoolInfo[] public poolInfo;
 }
