@@ -94,5 +94,6 @@ contract SHEESHAVaultLP is Ownable, ReentrancyGuard {
         sheesha = _sheesha;
         feeWallet = _feeWallet;
         startBlock = _startBlock;
+        sheeshaPerBlock = _sheeshaPerBlock;
     }
 }
