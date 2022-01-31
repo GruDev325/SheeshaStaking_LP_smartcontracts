@@ -89,6 +89,7 @@ contract SHEESHAVaultLP is Ownable, ReentrancyGuard {
         uint256 _startBlock,
         uint256 _sheeshaPerBlock
     ) {
-        
+        require(address(_sheesha) != address(0), "Sheesha can't be address 0");
+        require(_feeWallet != address(0), "Fee wallet can't be address 0");
     }
 }
