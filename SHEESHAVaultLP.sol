@@ -42,4 +42,36 @@ contract SHEESHAVaultLP is Ownable, ReentrancyGuard {
     uint256 public userCount;
     address public feeWallet;
     PoolInfo[] public poolInfo;
+
+    mapping(uint256 => mapping(address => UserInfo)) public userInfo;
+    mapping(uint256 => address) public userList;
+    mapping(address => bool) internal isExisting;
+
+    /**
+     * @dev Emitted when a user deposits tokens.
+     * @param user Address of user for which deposit was made.
+     * @param pid Pool's unique ID.
+     * @param amount The amount of deposited tokens.
+     */
+    event Deposit(address indexed user, uint256 indexed pid, uint256 amount);
+
+    /**
+     * @dev Emitted when a user withdraw tokens from staking.
+     * @param user Address of user for which deposit was made.
+     * @param pid Pool's unique ID.
+     * @param amount The amount of deposited tokens.
+     */
+    event Withdraw(address indexed user, uint256 indexed pid, uint256 amount);
+
+    /**
+     * @dev Emitted when a user withdraw tokens from staking without caring about rewards.
+     * @param user Address of user for which deposit was made.
+     * @param pid Pool's unique ID.
+     * @param amount The amount of deposited tokens.
+     */
+    event EmergencyWithdraw(
+        address indexed user,
+        uint256 indexed pid,
+        uint256 amount
+    );
 }
