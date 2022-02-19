@@ -102,5 +102,34 @@ contract SHEESHAVaultLP is Ownable, ReentrancyGuard {
         feeWallet = _feeWallet;
     }
 
-    
+    /**
+     * @dev Creates new pool for staking.
+     * @param _allocPoint Allocation points of new pool.
+     * @param _lpToken Address of pool token.
+     * @param _withUpdate Declare if it needed to update all other pools
+     */
+    function add(
+        uint256 _allocPoint,
+        IERC20 _lpToken,
+        bool _withUpdate
+    ) external onlyOwner {
+        for (uint256 i; i < poolInfo.length; i++) {
+            require(poolInfo[i].lpToken != _lpToken, "Pool already exist");
+        }
+        if (_withUpdate) {
+            massUpdatePools();
+        }
+        uint256 lastRewardBlock = block.number > startBlock
+            ? block.number
+            : startBlock;
+        totalAllocPoint = totalAllocPoint.add(_allocPoint);
+        poolInfo.push(
+            PoolInfo({
+                lpToken: _lpToken,
+                allocPoint: _allocPoint,
+                lastRewardBlock: lastRewardBlock,
+                accSheeshaPerShare: 0
+            })
+        );
+    }
 }
