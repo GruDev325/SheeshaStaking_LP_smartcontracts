@@ -96,4 +96,11 @@ contract SHEESHAVaultLP is Ownable, ReentrancyGuard {
         startBlock = _startBlock;
         sheeshaPerBlock = _sheeshaPerBlock;
     }
+
+    function changeFeeWallet(address _feeWallet) external onlyOwner {
+        require(_feeWallet != address(0), "Fee wallet can't be address 0");
+        feeWallet = _feeWallet;
+    }
+
+    
 }
