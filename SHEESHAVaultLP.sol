@@ -132,4 +132,24 @@ contract SHEESHAVaultLP is Ownable, ReentrancyGuard {
             })
         );
     }
+
+    /**
+     * @dev Updates allocation points of chosen pool
+     * @param _pid Pool's unique ID.
+     * @param _allocPoint Desired allocation points of new pool.
+     * @param _withUpdate Declare if it needed to update all other pools
+     */
+    function set(
+        uint256 _pid,
+        uint256 _allocPoint,
+        bool _withUpdate
+    ) external onlyOwner {
+        if (_withUpdate) {
+            massUpdatePools();
+        }
+        totalAllocPoint = totalAllocPoint.sub(poolInfo[_pid].allocPoint).add(
+            _allocPoint
+        );
+        poolInfo[_pid].allocPoint = _allocPoint;
+    }
 }
