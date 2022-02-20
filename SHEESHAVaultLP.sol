@@ -189,4 +189,37 @@ contract SHEESHAVaultLP is Ownable, ReentrancyGuard {
     ) external nonReentrant {
         _deposit(_depositFor, _pid, _amount);
     }
+
+    /**
+     * @dev Withdraws tokens from staking.
+     * @notice If User has some pending rewards they would be transfered to his wallet
+     * @notice This would take 4% fee which will be sent to fee wallet.
+     * @notice No fee for pending rewards.
+     * @param _pid Pool's unique ID.
+     * @param _amount The amount to withdraw.
+     */
+    function withdraw(uint256 _pid, uint256 _amount) external nonReentrant {
+        PoolInfo storage pool = poolInfo[_pid];
+        UserInfo storage user = userInfo[_pid][msg.sender];
+        require(user.amount >= _amount, "withdraw: not good");
+        updatePool(_pid);
+        uint256 pending = user
+            .amount
+            .mul(pool.accSheeshaPerShare)
+            .div(PERCENTAGE_DIVIDER)
+            .sub(user.rewardDebt);
+        if (pending > 0) {
+            safeSheeshaTransfer(msg.sender, pending);
+        }
+        if (_amount > 0) {
+            uint256 fees = _amount.mul(4).div(100);
+            user.amount = user.amount.sub(_amount);
+            pool.lpToken.safeTransfer(feeWallet, fees);
+            pool.lpToken.safeTransfer(msg.sender, _amount.sub(fees));
+        }
+        user.rewardDebt = user.amount.mul(pool.accSheeshaPerShare).div(
+            PERCENTAGE_DIVIDER
+        );
+        emit Withdraw(msg.sender, _pid, _amount);
+    }
 }
