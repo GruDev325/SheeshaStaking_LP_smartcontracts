@@ -173,4 +173,20 @@ contract SHEESHAVaultLP is Ownable, ReentrancyGuard {
     function deposit(uint256 _pid, uint256 _amount) external nonReentrant {
         _deposit(msg.sender, _pid, _amount);
     }
+
+    /**
+     * @dev Deposits tokens for specific user in staking contract.
+     * @notice Caller of method first need to approve deposited amount of tokens
+     * @notice If User has some pending rewards they would be transfered to his wallet
+     * @param _depositFor Address of user for which deposit is created
+     * @param _pid Pool's unique ID.
+     * @param _amount The amount to deposit.
+     */
+    function depositFor(
+        address _depositFor,
+        uint256 _pid,
+        uint256 _amount
+    ) external nonReentrant {
+        _deposit(_depositFor, _pid, _amount);
+    }
 }
