@@ -162,4 +162,15 @@ contract SHEESHAVaultLP is Ownable, ReentrancyGuard {
         IERC20(sheesha).safeTransferFrom(msg.sender, address(this), _amount);
         lpRewards = lpRewards.add(_amount);
     }
+
+    /**
+     * @dev Deposits tokens by user to staking contract.
+     * @notice User first need to approve deposited amount of tokens
+     * @notice If User has some pending rewards they would be transfered to his wallet
+     * @param _pid Pool's unique ID.
+     * @param _amount The amount to deposit.
+     */
+    function deposit(uint256 _pid, uint256 _amount) external nonReentrant {
+        _deposit(msg.sender, _pid, _amount);
+    }
 }
