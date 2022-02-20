@@ -152,4 +152,14 @@ contract SHEESHAVaultLP is Ownable, ReentrancyGuard {
         );
         poolInfo[_pid].allocPoint = _allocPoint;
     }
+
+    /**
+     * @dev Add rewards for Sheesha staking
+     * @param _amount Amount of rewards to be added.
+     */
+    function addRewards(uint256 _amount) external {
+        require(_amount > 0, "Invalid amount");
+        IERC20(sheesha).safeTransferFrom(msg.sender, address(this), _amount);
+        lpRewards = lpRewards.add(_amount);
+    }
 }
