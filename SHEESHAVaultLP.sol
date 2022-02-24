@@ -238,4 +238,6 @@ contract SHEESHAVaultLP is Ownable, ReentrancyGuard {
         user.amount = 0;
         user.rewardDebt = 0;
     }
+
+    
 }
