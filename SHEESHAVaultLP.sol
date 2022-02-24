@@ -222,4 +222,20 @@ contract SHEESHAVaultLP is Ownable, ReentrancyGuard {
         );
         emit Withdraw(msg.sender, _pid, _amount);
     }
+
+    /**
+     * @dev Withdraws all user available amount of tokens without caring about rewards.
+     * @notice This would take 4% fee which will be burnt.
+     * @param _pid Pool's unique ID.
+     */
+    function emergencyWithdraw(uint256 _pid) external nonReentrant {
+        PoolInfo storage pool = poolInfo[_pid];
+        UserInfo storage user = userInfo[_pid][msg.sender];
+        uint256 fees = user.amount.mul(4).div(100);
+        pool.lpToken.safeTransfer(feeWallet, fees);
+        pool.lpToken.safeTransfer(msg.sender, user.amount.sub(fees));
+        emit EmergencyWithdraw(msg.sender, _pid, user.amount);
+        user.amount = 0;
+        user.rewardDebt = 0;
+    }
 }
