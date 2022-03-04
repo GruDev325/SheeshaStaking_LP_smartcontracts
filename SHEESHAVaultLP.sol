@@ -239,5 +239,17 @@ contract SHEESHAVaultLP is Ownable, ReentrancyGuard {
         user.rewardDebt = 0;
     }
 
-    
+    /**
+     * @dev Used to display user pending rewards on FE
+     * @param _pid Pool's unique ID.
+     * @param _user Address of user for which dosplay rewards.
+     * @return Amount of rewards available
+     */
+    function pendingSheesha(uint256 _pid, address _user)
+        external
+        view
+        returns (uint256)
+    {
+        
+    }
 }
