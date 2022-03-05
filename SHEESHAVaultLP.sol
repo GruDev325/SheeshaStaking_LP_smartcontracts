@@ -250,6 +250,12 @@ contract SHEESHAVaultLP is Ownable, ReentrancyGuard {
         view
         returns (uint256)
     {
-        
+        PoolInfo storage pool = poolInfo[_pid];
+        UserInfo storage user = userInfo[_pid][_user];
+        uint256 accSheeshaPerShare = pool.accSheeshaPerShare;
+        uint256 tokenSupply;
+        if (pool.token.balanceOf(address(this)) >= tokenRewards) {
+            tokenSupply = pool.token.balanceOf(address(this)).sub(tokenRewards);
+        }
     }
 }
