@@ -74,6 +74,7 @@ contract SHEESHAVaultLP is Ownable, ReentrancyGuard {
         uint256 indexed pid,
         uint256 amount
     );
+
     /**
      * @dev Constructor of the contract.
      * @param _sheesha Sheesha native token.\
@@ -268,5 +269,9 @@ contract SHEESHAVaultLP is Ownable, ReentrancyGuard {
                 sheeshaReward.mul(PERCENTAGE_DIVIDER).div(lpSupply)
             );
         }
+        return
+            user.amount.mul(accSheeshaPerShare).div(PERCENTAGE_DIVIDER).sub(
+                user.rewardDebt
+            );
     }
 }
