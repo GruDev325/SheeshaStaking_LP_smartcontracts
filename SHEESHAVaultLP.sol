@@ -274,4 +274,12 @@ contract SHEESHAVaultLP is Ownable, ReentrancyGuard {
                 user.rewardDebt
             );
     }
+    
+     /**
+     * @dev Checks amounts of pools
+     * @return Number of pools available
+     */
+    function poolLength() external view returns (uint256) {
+        return poolInfo.length;
+    }
 }
