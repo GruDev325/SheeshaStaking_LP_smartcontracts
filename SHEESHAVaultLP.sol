@@ -282,4 +282,14 @@ contract SHEESHAVaultLP is Ownable, ReentrancyGuard {
     function poolLength() external view returns (uint256) {
         return poolInfo.length;
     }
+
+    /**
+     * @dev Updates all available pools accumulated Sheesha per share and last reward block
+     */
+    function massUpdatePools() public {
+        uint256 length = poolInfo.length;
+        for (uint256 pid = 0; pid < length; ++pid) {
+            updatePool(pid);
+        }
+    }
 }
