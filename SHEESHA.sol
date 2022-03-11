@@ -47,7 +47,7 @@ contract SHEESHA is ERC20Burnable, Ownable {
             forLiquidityPool_,
             INITIAL_SUPPLY.mul(5).div(1000)
         );
-    } 
+    }
 
     /**
      * @dev Transfer staking native rewards.
@@ -62,9 +62,8 @@ contract SHEESHA is ERC20Burnable, Ownable {
             INITIAL_SUPPLY.mul(10).div(100)
         );
         vaultTransferDone = true;
-    }   
+    }
 
-    
     /**
      * @dev Transfer staking native rewards.
      * @param vaultLPAddress_ Address where tokens for staking LP
@@ -97,6 +96,4 @@ contract SHEESHA is ERC20Burnable, Ownable {
         );
         vestingTransferDone = true;
     }
-    
-    
 }
